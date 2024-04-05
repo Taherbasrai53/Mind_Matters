@@ -1,0 +1,1 @@
+This is a mental health threads application. This application allows users to talk about thier mental health related issues and reduce the stigma related to it.
