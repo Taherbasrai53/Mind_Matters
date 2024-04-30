@@ -14,4 +14,20 @@ app.use(express.static("public"))
 
 app.use(cookieParser())
 
+
+
+// import router
+
+import userRouter from "./routes/user.route.js"
+
+app.use("/users", userRouter)
+
+import roomRouter from './routes/room.route.js'
+
+app.use("/rooms", roomRouter)
+
+import threadRouter from './routes/thread.route.js'
+
+app.use("/threads", threadRouter)
+
 export { app } 
