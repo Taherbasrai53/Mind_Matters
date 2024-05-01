@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import jwt from"json-web-token"
+import jwt from"jsonwebtoken"
 
 let userSchema= new mongoose.Schema({
     UserName:{
@@ -11,14 +11,14 @@ let userSchema= new mongoose.Schema({
     },
     Password:{
         type:String,
-        required:[true, "UserName is required"]        
+        required:[true, "Password is required"]        
     },
     ProfilePic:{
         type:String
     },
     RoomsCreated:[
         {
-            type:mongoose.schema.type.ObjectId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:"Room"
         }
     ],
@@ -37,14 +37,14 @@ let userSchema= new mongoose.Schema({
     timestamps:true
 })
 
-mongoose.methods.checkPassword= function (password)
+userSchema.methods.checkPassword= function (password)
 {
-    return this.password===password
+    return this.Password===password
 }
 
-mongoose.methods.generateToken = function()
+userSchema.methods.generateToken = function()
 {
-    jwt.sign(
+    return jwt.sign(
         {
             _id:this._id,
             type:this.UserType

@@ -5,17 +5,17 @@ import mongooseAggregatePaginate from 'mongoose-aggregate-paginate-v2'
 let threadSchema= new mongoose.Schema(
     {
         UserId:{
-            type:mongoose.Schema.type.ObjectId, 
+            type:mongoose.Schema.Types.ObjectId, 
             ref:'User',
             required:true
         },
         RoomId:{
-            type:mongoose.Schema.type.ObjectId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:'Room',
             required:true
         },
         ParentId:{
-            type:mongoose.Schema.type.ObjectId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:'Thread',
             index:true
         },

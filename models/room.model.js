@@ -5,7 +5,7 @@ import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2"
 let roomSchema= new mongoose.Schema(
     {
         Owner:{
-            type:mongoose.Schema.type.ObjectId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:'User',
             required:true
         },
@@ -13,7 +13,7 @@ let roomSchema= new mongoose.Schema(
             type:String,
             required:true,
             index:true,
-            trime:true
+            trim:true
         },
         ThumbNail:{
             type:String            
