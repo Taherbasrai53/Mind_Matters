@@ -88,7 +88,7 @@ const dfs=  (hm, key)=>{
 
     if(!hm.has(key))
     {
-        return null;
+        return [];
     }
     console.log("hello")
     const ls= []

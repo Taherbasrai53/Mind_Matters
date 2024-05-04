@@ -1,6 +1,12 @@
 import express, { urlencoded } from "express"
 const app= express()
 
+import dotenv from "dotenv"
+
+dotenv.config({path: './env'})
+
+import connectDB from "./db/index.js"
+
 import cors from "cors"
 import cookieParser from "cookie-parser"
 
@@ -28,6 +34,23 @@ app.use("/rooms", roomRouter)
 
 import threadRouter from './routes/thread.route.js'
 
+
 app.use("/threads", threadRouter)
+
+connectDB()
+.then(()=>{
+
+    app.on("error", (error)=>{
+        console.log("error!!!", error)
+        throw error
+    })
+
+    app.listen(process.env.PORT, ()=>{
+        console.log("the app is listening on ", process.env.PORT)
+    })
+})
+.catch((err)=>{
+    console.log("there was an error while connecting to the DB ", err)
+})
 
 export { app } 
