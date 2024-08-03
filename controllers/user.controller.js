@@ -1,6 +1,8 @@
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {User} from "../models/user.model.js"
 import {ApiError} from "../utils/ApiError.js"
+import { uploadOnAWS } from "../utils/S3Util.js"
+import fs from "fs"
 
 let registerUser= asyncHandler( async(req, res)=>{
     
@@ -18,7 +20,7 @@ let registerUser= asyncHandler( async(req, res)=>{
     
     
     let existingUser= await User.findOne({UserName:UserName})
-    console.log(existingUser)
+    //console.log(existingUser)
 
     if(existingUser!==null)
     {
@@ -28,12 +30,23 @@ let registerUser= asyncHandler( async(req, res)=>{
         })
         
     }
-    //console.log("helloooo");
+    const profilePicLocalPath=req.file?.path;
+    let ProfilePic="";
+    
+    if(profilePicLocalPath)
+    {
+        ProfilePic=await uploadOnAWS(profilePicLocalPath)  
+        
+        fs.unlinkSync(profilePicLocalPath)
+    }
+    
     
     let savedUser= await User.create({
         UserName: UserName,
-        Password:Password
+        Password:Password,
+        ProfilePic:ProfilePic.Location        
     })
+
 
     return  res.status(200).json({
         id: savedUser._id,

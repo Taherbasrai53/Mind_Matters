@@ -1,6 +1,12 @@
 import express, { urlencoded } from "express"
 const app= express()
 
+import dotenv from "dotenv"
+
+dotenv.config({path: './env'})
+
+import connectDB from "./db/index.js"
+
 import cors from "cors"
 import cookieParser from "cookie-parser"
 
@@ -10,7 +16,7 @@ app.use(express.json({limit:"16kb"}))
 
 app.use(express.urlencoded({extended:true, limit:"16kb"}))
 
-app.use(express.static("public"))
+app.use('/public', express.static('public'));
 
 app.use(cookieParser())
 
@@ -28,6 +34,27 @@ app.use("/rooms", roomRouter)
 
 import threadRouter from './routes/thread.route.js'
 
+
 app.use("/threads", threadRouter)
+
+import searchRouter from './routes/search.route.js'
+
+app.use("/search", searchRouter)
+
+connectDB()
+.then(()=>{
+
+    app.on("error", (error)=>{
+        console.log("error!!!", error)
+        throw error
+    })
+
+    app.listen(process.env.PORT, ()=>{
+        console.log("the app is listening on ", process.env.PORT)
+    })
+})
+.catch((err)=>{
+    console.log("there was an error while connecting to the DB ", err)
+})
 
 export { app } 

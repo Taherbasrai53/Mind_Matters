@@ -5,7 +5,7 @@ import { User } from '../models/user.model.js';
 const requireAuth = asyncHandler(async (req, res, next) => {
     try {
         let token = req.header("Authorization").replace("Bearer ", "");
-        //console.log(token);
+        //console.log("token", token);
         
         if (!token) {
             return res.status(403).json({
@@ -15,11 +15,19 @@ const requireAuth = asyncHandler(async (req, res, next) => {
         }
                 
         const decoded = jwt.decode(token); // No need to pass the secret key
-        //console.log(decoded);
+        //console.log("decoded", decoded);
         
         const userId = decoded._id;
     
         const user = await User.findOne({ _id: userId }).select("-password");
+        if(!user)
+        {
+            res.status(403).json({
+                success:false, 
+                message:"auth failed"
+            })
+        }
+        //console.log("user", user)
         //console.log(user);
     
         req.User = user;

@@ -14,7 +14,8 @@ let userSchema= new mongoose.Schema({
         required:[true, "Password is required"]        
     },
     ProfilePic:{
-        type:String
+        type:String,
+        default:""
     },
     RoomsCreated:[
         {
