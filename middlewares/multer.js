@@ -1,0 +1,18 @@
+import multer from "multer"
+
+const storage= multer.diskStorage({
+    destination: function(req, file, cb){
+        console.log("Multer: destination function triggered");
+        cb(null, "./public")
+    },
+    filename:function(req, file, cb){
+        console.log("Multer: filename function triggered");
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, `${uniqueSuffix}${file.originalname}`)
+    }
+
+})
+
+export const upload= multer({
+    storage:storage   
+})

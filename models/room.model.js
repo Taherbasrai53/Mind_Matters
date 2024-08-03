@@ -16,7 +16,8 @@ let roomSchema= new mongoose.Schema(
             trim:true
         },
         ThumbNail:{
-            type:String            
+            type:String,
+            default:""        
         },
         UpVotes:{
             type:Number,

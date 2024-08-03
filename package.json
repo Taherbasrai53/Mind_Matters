@@ -16,10 +16,10 @@
   "author": "Taher Basrai",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.0",
     "prettier": "^3.2.5"
   },
   "dependencies": {
+    "aws-sdk": "^2.1613.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
